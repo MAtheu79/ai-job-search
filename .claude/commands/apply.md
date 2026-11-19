@@ -287,4 +287,5 @@ Tell the user: "Both files are ready for your review. Open them to check the fin
 
 ### Next Steps
 - **Submitted?** `/outcome <company>` logs it in the tracker and starts the per-application record that `/setup` later uses to calibrate the fit framework.
+- **Edited the drafts by hand?** `/verify <company>` re-runs this checklist and the PDF/ATS checks on the files as they now stand.
 - **Interview scheduled?** `/interview` builds a stage-specific prep pack from this posting and the documents you just created.
