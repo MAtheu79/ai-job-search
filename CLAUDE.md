@@ -84,6 +84,16 @@ This repo is a job application workspace. Claude acts as a career advisor and ap
 - `.claude/skills/` - AI skill definitions for the application workflow
 - `.agents/skills/` - Job search CLI tools
 
+## Working Agreement
+- **Decide together.** For non-trivial choices (which jobs to pursue, what to build or change in this repo, how to position an application), give a clear recommendation with the reason, then let the user decide. Don't silently pick, and don't present a long list of options without a recommendation.
+- **Remind proactively.** At the start of a working session, and whenever it is relevant, check for anything pending and mention it briefly:
+  - follow-ups or thank-you notes due (`python tools/followup_due.py`)
+  - applications awaiting an `/outcome` update (two follow-ups unanswered, or interviews with no recorded result)
+  - shortlisted or `new` jobs with a deadline within 7 days (`job_scraper/seen_jobs.json`)
+  - unfinished drafts in `cv/` or `cover_letters/` that were never verified or submitted
+  Keep reminders to a few lines; don't block the user's actual request on them.
+- **Language:** reply in Spanish unless the user writes in another language.
+
 ## Workflow for New Job Applications
 1. User provides a job posting (URL or text)
 2. **Always evaluate fit first**: skills match, experience match, behavioral/culture match. Present this assessment to the user before proceeding.
