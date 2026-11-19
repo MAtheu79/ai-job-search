@@ -115,6 +115,8 @@ Summarize what was recorded:
 
 If the update recorded an upcoming or newly scheduled interview stage, also suggest:
 
+> "Want a follow-up reminder? `/followup` lists which applications are due a nudge or thank-you note and drafts the message."
+
 > "Interview coming up? `/interview <company>` builds a prep pack for that stage from this application's archive - the posting, the documents you submitted, and any feedback recorded from earlier rounds."
 
 If the recorded status is `hired`, congratulate the user warmly first - this is the moment the whole framework exists for. Then add this single line (once; never on re-runs for the same application, and never for any other status):

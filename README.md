@@ -135,11 +135,14 @@ Postings are treated as untrusted input (the workflow follows no instructions em
 
 ## Other commands
 
-`/setup`, `/scrape`, and `/apply` form the core workflow. Nine more commands extend it once your profile is in place:
+`/setup`, `/scrape`, and `/apply` form the core workflow. Twelve more commands extend it once your profile is in place:
 
 - **`/interview`** preps you for a scheduled interview on a tracked application. It builds a stage-specific prep pack from the application's archive (the exact posting, the CV and cover letter the interviewer actually read, feedback recorded from earlier rounds), researches the company and interviewers with a verify-before-use rule, maps likely questions to your STAR examples, and offers a mock interview following the roleplay protocol in `07-interview-prep.md`. Gaps get honest bridge answers, never invented experience.
 - **`/outcome`** records what happened to an application - interview stages, offers, rejections, silence. It archives the submitted CV, cover letter, and posting text into `documents/applications/<company>_<role>/`, keeps `outcome.md` in the format `/setup` Path A parses, and updates the tracker. Once a few applications resolve, it points you back to `/setup` to calibrate the fit framework from what actually got interviews.
+- **`/followup`** tells you which open applications need a nudge (7 days of silence after applying, a check-in a week after an interview, a thank-you note the day of) and drafts a short, specific message for each in the posting's language. It never sends anything: you send it, then `/followup --sent <company>` logs it in the tracker so the cadence resets. After two unanswered follow-ups it points you to `/outcome` instead of a third.
 - **`/notion-sync`** publishes a one-way, read-only view of the pipeline into a Notion database via the official Notion MCP server (OAuth, no API keys) - one row per ranked job plus every tracked application, with a write-once briefing page per row. The repo files stay the system of record: nothing syncs back, and documents sync as filenames only. Complements `/html-report`: that is the deep offline dashboard you regenerate at your desk; this is the glanceable live view from anywhere Notion runs (desktop, web, phone).
+- **`/check-posting`** checks whether a posting is still open (dead links, redirects to listing pages, closed-posting phrases in English, Danish, Spanish and German, past deadlines) and whether the same company has posted the same role before or you already applied to it. Flags likely reposts and ghost jobs before you invest time. `/apply` runs it automatically; `--scraped` sweeps your `seen_jobs.json` backlog and marks dead postings `expired`.
+- **`/verify`** runs the full verification checklist on an existing CV and cover letter, outside `/apply`: factual accuracy against your profile, independently verified company claims, targeting and keyword coverage (when a posting is available), compile, page count, orphaned entries, and the ATS text layer. Report-only by default; `--fix` applies safe layout and LaTeX fixes and asks before touching content. Use it after hand-editing a draft or switching templates.
 - **`/rank`** bridges `/scrape` and `/apply`: it batch-scores all newly scraped postings against the fit framework (parallel agents fetch each posting and score the five evaluation dimensions) and returns a ranked shortlist with honest per-job strengths and gaps. Deal-breakers veto, deadlines get urgency flags, dead postings get marked expired. Pick a number and it hands off to the full `/apply` workflow.
 - **`/expand`** enriches your profile by scanning public sources you've already linked in it (GitHub repos, portfolio site, Kaggle, Google Scholar) and looking up syllabi for named courses and certifications. Discovered competencies are added to your profile with a source tag. Useful right after `/setup` to surface skills that documents alone don't make explicit.
 - **`/upskill`** analyzes the gap between your profile and your tracked job postings (or a single posting via `/upskill <URL>`). Produces a prioritized heatmap of skill gaps and a learning plan with web-searched study resources and time estimates. Useful for career planning between applications.
@@ -163,7 +166,10 @@ ai-job-search/
 │   │   ├── add-portal.md              # /add-portal generate a job-portal search skill for your market
 │   │   ├── rank.md                    # /rank triage scraped jobs into a ranked shortlist
 │   │   ├── outcome.md                 # /outcome record application results, archive materials
+│   │   ├── followup.md                # /followup due follow-ups + drafted messages
 │   │   ├── interview.md               # /interview stage-specific prep pack + mock interview
+│   │   ├── check-posting.md           # /check-posting liveness + repost/ghost-job check
+│   │   ├── verify.md                  # /verify standalone checklist + PDF/ATS checks on existing drafts
 │   │   ├── html-report.md             # /html-report generate application tracker dashboard
 │   │   ├── notion-sync.md             # /notion-sync one-way pipeline view in a Notion database
 │   │   └── reset.md                   # /reset wipe profile data or documents folder
@@ -207,6 +213,8 @@ ai-job-search/
 ├── tools/
 │   ├── convert_salary_excel.py        # Convert salary Excel to JSON
 │   ├── lint_skills.py                 # CI lint for skills, commands, settings.json
+│   ├── followup_due.py                # /followup cadence: which applications need a nudge
+│   ├── posting_check.py               # /check-posting helpers: closed signals, repost detection
 │   ├── security_guards.py             # CI guards: permission allowlist, gitignore rules, manifests
 │   └── README_SALARY_TOOL.md          # Salary tool setup instructions
 ├── job_scraper/                       # Scraper state (seen jobs, results)
