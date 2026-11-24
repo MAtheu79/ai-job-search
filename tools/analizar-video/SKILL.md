@@ -21,6 +21,8 @@ allowed-tools: Bash, Read
 3. Interpreta la salida:
    - **Exit 0, informe con `## Answer (from Gemini)`**: transmite la respuesta de Gemini con sus marcas de tiempo, aclarando que la vio Gemini.
    - **Exit 10, `PLAN_B` con rutas `SHEET:`**: Gemini no estaba disponible. Lee cada hoja con Read (cada celda lleva su marca de tiempo en amarillo). Si hay subtítulos incrustados, tradúcelos: suelen ser la narración. Indica al usuario que el resumen sale de los fotogramas y que el audio no se escuchó.
+   - **Exit 11, `PLAN_C`**: solo hay texto (título, descripción, capítulos y subtítulos). Resume a partir de ahí y aclara que no se vieron las imágenes.
+   - **Exit 10 con `PLAN_C` y `PLAN_B`**: combina el texto con las hojas de fotogramas.
    - **Otro exit**: informa del error tal cual y ofrece reintentar más tarde.
 4. Formato de respuesta (español):
    - Una línea con qué es el vídeo (duración, formato y tema).
