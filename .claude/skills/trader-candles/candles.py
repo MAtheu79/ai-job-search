@@ -113,8 +113,17 @@ def label(ts, interval):
 
 # ---------------------------------------------------------------- data
 
+EXCHANGE_SUFFIXES = {"MC", "L", "DE", "F", "PA", "AS", "MI", "BR", "LS", "SW", "ST", "OL", "CO", "HE", "VI", "IR",
+                     "TO", "V", "NE", "MX", "SA", "BA", "SN", "AX", "NZ", "HK", "T", "KS", "KQ", "SS", "SZ", "TW",
+                     "SI", "NS", "BO", "JK", "BK", "KL", "TA", "JO", "IS", "WA", "PR", "AT"}
+
+
 def yahoo_symbol(sym):
-    return sym.upper().replace(".", "-")
+    """BRK.B -> BRK-B (a share class), but SAN.MC / VOD.L keep the exchange suffix."""
+    sym = sym.upper()
+    if "." in sym and sym.rsplit(".", 1)[1] not in EXCHANGE_SUFFIXES:
+        return sym.replace(".", "-")
+    return sym
 
 
 def _open_url(url, timeout=20):
@@ -226,19 +235,21 @@ def get_chart(sym, interval, rng=None, offline=None):
         text = yahoo_get("/v8/finance/chart/%s?range=%s&interval=%s"
                          % (yahoo_symbol(sym), rng or DEFAULT_RANGE[interval], interval))
     ch = parse_chart(text, sym)
-    gran = ch["meta"].get("dataGranularity")
+    gran = {"1h": "60m"}.get(ch["meta"].get("dataGranularity"), ch["meta"].get("dataGranularity"))
     if offline and gran and gran in INTERVALS and gran != interval:
         interval = gran          # a saved file knows its own candle size
     elif gran and gran != interval:
         raise CandleError("%s has %s candles, not %s" % (sym, gran, interval))
     ch["interval"] = interval
+    ch["crypto"] = str(ch["meta"].get("instrumentType") or "").upper() == "CRYPTOCURRENCY"
     return ch
 
 
-def closed_bars(bars, interval, now):
-    """Split into closed candles and the one still forming (if any)."""
+def closed_bars(bars, interval, now, round_the_clock=False):
+    """Split into closed candles and the one still forming (if any). Crypto
+    trades 24/7, so its candles simply close after their own length."""
     step = INTERVALS[interval]
-    if not intraday(interval):
+    if not intraday(interval) and not round_the_clock:
         # a daily candle is closed once its session is over (4:00 p.m. New York)
         out, forming = [], None
         for b in bars:
@@ -437,7 +448,7 @@ def load(a, sym):
     now = parse_now(a.now) if a.now else now_ts()
     ch = get_chart(sym, a.interval, getattr(a, "range", None), a.offline)
     bars = [b for b in ch["bars"] if b["t"] <= now]
-    closed, forming = closed_bars(bars, ch["interval"], now)
+    closed, forming = closed_bars(bars, ch["interval"], now, ch.get("crypto"))
     if not closed and not forming:
         raise CandleError("no candles for %s before %s" % (sym, label(now, "5m")))
     return ch, closed, forming, now
