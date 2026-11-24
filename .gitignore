@@ -80,3 +80,6 @@ upskill/*.md
 # Brainstorm mockups (superpowers visual companion) - never ship
 .superpowers/
 job_scraper/.posting_check.txt
+
+# Day-trader skills working data (plans, orders, config with SEC user agent)
+trader/
