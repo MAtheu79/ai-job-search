@@ -430,13 +430,16 @@ def detect(bars, interval="5m"):
 
 # ---------------------------------------------------------------- selection
 
-def session_slice(bars, interval, day=None):
+def session_slice(bars, interval, day=None, round_the_clock=False):
     """Indexes [lo, hi) of the candles to SHOW: one New York session for
     intraday candles (the given day or the latest), everything for daily."""
     if not bars:
         return 0, 0
     if not intraday(interval):
         return 0, len(bars)
+    if round_the_clock and day is None:          # crypto: the last 24 hours, not a New York session
+        start = bars[-1]["t"] - 86400 + INTERVALS[interval]
+        return next(i for i, b in enumerate(bars) if b["t"] >= start), len(bars)
     want = day or ny(bars[-1]["t"]).date()
     idx = [i for i, b in enumerate(bars) if ny(b["t"]).date() == want]
     if not idx:
@@ -476,7 +479,7 @@ def line(p):
 
 def cmd_patterns(a):
     ch, closed, forming, now = load(a, a.symbol)
-    lo, hi = session_slice(closed, ch["interval"], parse_day(a.date))
+    lo, hi = session_slice(closed, ch["interval"], parse_day(a.date), ch.get("crypto"))
     found = [p for p in detect(closed, ch["interval"]) if lo <= p["index"] < hi]
     if a.direction:
         found = [p for p in found if p["direction"] == a.direction]
@@ -834,7 +837,7 @@ def cmd_chart(a):
         except ValueError:
             pass
     if closed:
-        lo, hi = session_slice(closed, ch["interval"], day)
+        lo, hi = session_slice(closed, ch["interval"], day, ch.get("crypto"))
     else:
         lo = hi = 0
     if not intraday(ch["interval"]) and a.bars:
