@@ -1,0 +1,30 @@
+# SkillSpector baseline — findings listed here are suppressed on future scans.
+# Edit 'reason' fields and add glob 'rules' as needed. See docs/SUPPRESSION.md.
+version: 2
+scanner_version: 2.13.7
+rules: []
+fingerprints:
+- hash: sha256:01f06ded9211d37558db1c2bacdf8219b08d2b41a0421ff3a411b81fe7730520
+  rule_id: LP1
+  file: cli/src/helpers.ts
+  reason: 'Reviewed 2026-11-26: static-analysis false positive or accepted risk'
+- hash: sha256:a8d6117e8cc947d9ff3240b0cc5da2981f883e5a08964eb039d4a7b060adf1ab
+  rule_id: LP1
+  file: cli/src/helpers.ts
+  reason: 'Reviewed 2026-11-26: static-analysis false positive or accepted risk'
+- hash: sha256:e8f7ec056ab38dfaa428a4034716c20c6b551933a2612bd44648dbff1b78e423
+  rule_id: PE3
+  file: cli/tests/helpers.ts
+  reason: 'Reviewed 2026-11-26: static-analysis false positive or accepted risk'
+- hash: sha256:d4b7baeda0801a4a44b798140fd66e149f428777d527359b144d5d74f9fbc07a
+  rule_id: SC1
+  file: cli/package.json
+  reason: 'Reviewed 2026-11-26: static-analysis false positive or accepted risk'
+- hash: sha256:ff6112812654d7bad9b04dab4daf6354d40dac723da5100a09718468918e9fd3
+  rule_id: SC1
+  file: cli/package.json
+  reason: 'Reviewed 2026-11-26: static-analysis false positive or accepted risk'
+- hash: sha256:c06ff3120347ec2403860ed5b977d0a8aa0530d503187b454b919bc8a413b733
+  rule_id: SC4
+  file: cli/package.json
+  reason: 'Reviewed 2026-11-26: static-analysis false positive or accepted risk'

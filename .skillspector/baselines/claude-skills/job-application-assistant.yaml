@@ -1,0 +1,10 @@
+# SkillSpector baseline — findings listed here are suppressed on future scans.
+# Edit 'reason' fields and add glob 'rules' as needed. See docs/SUPPRESSION.md.
+version: 2
+scanner_version: 2.13.7
+rules: []
+fingerprints:
+- hash: sha256:37e34c0039c24c61b9862a658f273fa98e9eace7f4c8dc2182372008b87893be
+  rule_id: EA2
+  file: 05-cv-templates.md
+  reason: 'Reviewed 2026-11-26: static-analysis false positive or accepted risk'

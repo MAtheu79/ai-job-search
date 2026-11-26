@@ -1,0 +1,42 @@
+# SkillSpector baseline — findings listed here are suppressed on future scans.
+# Edit 'reason' fields and add glob 'rules' as needed. See docs/SUPPRESSION.md.
+version: 2
+scanner_version: 2.13.7
+rules: []
+fingerprints:
+- hash: sha256:b2a3893faffefb3dd1669772e65e7792947de08f409cefcf60822ee70e46468f
+  rule_id: LP1
+  file: cli/src/commands/detail.ts
+  reason: 'Reviewed 2026-11-26: static-analysis false positive or accepted risk'
+- hash: sha256:92ff07b18735971878616288c229cf281acf0c7bfd7617d3e4c17d70d1f705ba
+  rule_id: SC1
+  file: cli/package.json
+  reason: 'Reviewed 2026-11-26: static-analysis false positive or accepted risk'
+- hash: sha256:cfb8e977bf6b572f6b1e16917f66e10fa17fcd1b77f3428226470a05db5fbf93
+  rule_id: SC1
+  file: cli/package.json
+  reason: 'Reviewed 2026-11-26: static-analysis false positive or accepted risk'
+- hash: sha256:b5fc8d41e544898fa742a49eed86e941263a8627330188edf15e61abf1873dfa
+  rule_id: SC1
+  file: cli/package.json
+  reason: 'Reviewed 2026-11-26: static-analysis false positive or accepted risk'
+- hash: sha256:17d7ea2c62dfd3fb84a43736a6e440c28713127bb3a51a3faec54ef70f851e2c
+  rule_id: SC1
+  file: cli/package.json
+  reason: 'Reviewed 2026-11-26: static-analysis false positive or accepted risk'
+- hash: sha256:7791cb769e1cfd0884b17af65d9acac923174225d8d3984f24287bcbcbfe9dc2
+  rule_id: SC1
+  file: cli/package.json
+  reason: 'Reviewed 2026-11-26: static-analysis false positive or accepted risk'
+- hash: sha256:6be4d5667caac15d3d34ed32b9ddd15d86ed9c8760f7154a08135ef6380fca19
+  rule_id: SC1
+  file: cli/package.json
+  reason: 'Reviewed 2026-11-26: static-analysis false positive or accepted risk'
+- hash: sha256:9fe5923c8660da3211e16b7a9da0ad80185b66b7f825f8b44d6b3315a6d78e4e
+  rule_id: SC4
+  file: cli/package.json
+  reason: 'Reviewed 2026-11-26: static-analysis false positive or accepted risk'
+- hash: sha256:8c34e78df8f260e8f2e5a12420b04241cf832f548e417b306c78080bf1008eed
+  rule_id: TR2
+  file: SKILL.md
+  reason: 'Reviewed 2026-11-26: static-analysis false positive or accepted risk'
